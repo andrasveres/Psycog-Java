@@ -1,0 +1,53 @@
+package other;
+
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Random;
+
+
+public class ClickTrialSet {
+	
+	Random r = new Random();
+
+	int n = 500;
+	
+	public int periodic_color=-1;
+	public int periodic_start=-1;
+	
+	public ClickTrial[] trial= new ClickTrial[n];
+	
+	public ClickTrialSet() {
+		
+		int i;
+		
+		periodic_start = (int) (r.nextDouble()*3);
+		periodic_color = (int)(r.nextDouble()*4);
+		
+		System.out.println(periodic_start+" "+periodic_color);
+		
+		int l=0;
+	
+		for(i=0; i<n; i++) {
+			trial[i] = new ClickTrial();					
+			
+			if(l==periodic_start) {
+				trial[i].col = periodic_color;
+			} else {		
+				
+				do {
+					trial[i].col = (int)(r.nextDouble()*4);
+					
+					if(i==0) break;
+				} while(trial[i].col == trial[i-1].col || trial[i].col == periodic_color); 
+			}			
+			
+			l++;
+			
+			if(l==3) l=0;
+		}
+		
+	}			
+}
+
